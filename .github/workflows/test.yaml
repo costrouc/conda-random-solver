@@ -25,6 +25,7 @@ jobs:
       - name: Install plugin
         shell: bash -el {0}
         run: |
+          conda activate base
           pip install -e .
 
       - name: Conda test
