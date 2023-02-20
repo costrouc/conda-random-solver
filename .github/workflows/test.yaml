@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    matrix:
+      os:
+        - ubuntu-latest
+        - windows-latest
+        - macos-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@master
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+          conda-version: '23.1.0'
+
+      - name: Install plugin
+        shell: bash -el {0}
+        run: |
+          pip install -e .
+
+      - name: Conda test
+        shell: bash -el {0}
+        run: |
+          conda info
+          conda create -y -n test numpy
