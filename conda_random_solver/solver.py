@@ -62,6 +62,9 @@ class RandomSolver(Solver):
                 channel_url = Channel.from_url(url)
                 subdir_data = SubdirData(channel_url, repodata_fn=self._repodata_fn)
                 subdir_data.load()
-                package_records.extend(list(subdir_data.iter_records()))
+                if 'noarch' not in url:
+                    # skip noarch packages since they have context e.g.
+                    # like needing to know the directory of python
+                    package_records.extend(list(subdir_data.iter_records()))
 
         return IndexedSet(random.sample(package_records, 10))
