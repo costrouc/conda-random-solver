@@ -27,6 +27,7 @@ jobs:
         run: |
           conda activate base
           python -m pip install -e .
+          conda config set --solver=random
 
       - name: Conda test
         shell: bash -el {0}
